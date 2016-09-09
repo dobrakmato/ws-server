@@ -1,0 +1,28 @@
+{
+  "listen": {
+    "address": "0.0.0.0",
+    "port": 8080,
+    "ssl": {
+      "enabled": false,
+      "pem": ""
+    }
+  },
+  "backend": {
+    "address": "127.0.0.1",
+    "port": 8081
+  },
+  "paths": {
+    "webSocket": "/live",
+    "serverStatus": "/server-status",
+    "clientList": "/clients"
+  },
+  "emefka": {
+    "mysql": {
+      "address": "127.0.0.1",
+      "port": 3306,
+      "database": "root",
+      "username": "root",
+      "password": "root"
+    }
+  }
+}

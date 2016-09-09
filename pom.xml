@@ -5,8 +5,142 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>sk.emefka.ws</groupId>
-    <artifactId>ws-server</artifactId>
+    <artifactId>wsserver</artifactId>
     <version>1.0</version>
 
+    <name>Websocket Server For Real-time Communications</name>
+    <description></description>
+    <inceptionYear>2016</inceptionYear>
 
+    <properties>
+        <!-- Encoding of sources -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Main class name -->
+        <main.class>sk.emefka.ws.wsserver.Bootstrap</main.class>
+        <!-- Build properties -->
+        <build.unknown>UNKNOWN</build.unknown>
+        <build.number>${build.unknown}</build.number>
+        <build.revision>${build.unknown}</build.revision>
+        <netty.version>4.1.4.Final</netty.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+
+        <!-- <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-transport-native-epoll</artifactId>
+            <version>${netty.version}</version>
+            <classifier>linux-x86_64</classifier>
+        </dependency> -->
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20151123</version>
+        </dependency>
+
+        <!-- Version 6.X has issue with timezone. Don't use it for now. -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.37</version>
+        </dependency>
+
+        <!-- <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.1.1</version>
+        </dependency> -->
+
+        <!-- Logging library. -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jcabi</groupId>
+            <artifactId>jcabi-log</artifactId>
+            <version>0.15</version>
+        </dependency>
+
+        <!-- Code generation. -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.6</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Testing. -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.9-RC1</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Main class and manifest. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>${main.class}</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- Include dependencies. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Compile with Java 1.8 -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
