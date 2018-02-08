@@ -43,7 +43,7 @@ public class EmefkaAuthenticator implements Authenticator, Disposable {
             try {
                 mysql.close();
             } catch (SQLException e) {
-                log.error("Can't close!", e);
+                log.error("Can't c!", e);
             }
         }
 

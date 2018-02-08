@@ -65,6 +65,7 @@ public class PipelineUtils {
             ch.pipeline().addLast(new AuthenticationHandler());                     // used to authenticate a websocket (one time)
             ch.pipeline().addLast(new HttpRequestHandler());                        // used to process http request (one time)
             ch.pipeline().addLast(new WebSocketServerProtocolHandler(config.getWebsocketPath())); // used to handle websocket server
+            ch.pipeline().addLast(new WebSocketFrameToActionDecoder());                    // used to handle websocket frames
             ch.pipeline().addLast(new WebSocketClientHandler());                    // used to handle websocket frames
         }
     };

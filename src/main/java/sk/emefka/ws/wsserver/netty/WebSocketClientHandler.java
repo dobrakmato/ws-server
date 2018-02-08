@@ -23,9 +23,18 @@ public class WebSocketClientHandler extends SimpleChannelInboundHandler<TextWebS
         if (evt == WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
             // user handshaked
             //log.info("User {} completed handshake!", ctx.channel().id());
-            ctx.writeAndFlush(new TextWebSocketFrame("Hey! Welcome to our server!"));
+            ctx.writeAndFlush(new TextWebSocketFrame("Emefka je super stranka! Hladame nadsenych programatorov."));
         }
         ctx.fireUserEventTriggered(evt);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        if (cause instanceof StringIndexOutOfBoundsException) {
+            log.error("StringIndexOutOfBoundsException occurred.");
+        } else {
+            throw new RuntimeException(cause);
+        }
     }
 
     @Override

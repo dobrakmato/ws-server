@@ -107,8 +107,8 @@ public final class RobinServer {
      * @throws InterruptedException when server thread is interrupted
      */
     public void start() throws InterruptedException {
-        bossGroup = PipelineUtils.newEventLoopGroup(2, new DefaultThreadFactory("Boss IO")); // io-group
-        workerGroup = PipelineUtils.newEventLoopGroup(8, new DefaultThreadFactory("Worker IO")); // io-group
+        bossGroup = PipelineUtils.newEventLoopGroup(1, new DefaultThreadFactory("Boss IO")); // io-group
+        workerGroup = PipelineUtils.newEventLoopGroup(4, new DefaultThreadFactory("Worker IO")); // io-group
         executorGroup = new DefaultEventExecutorGroup(4, new DefaultThreadFactory("Executor"));
 
         new ServerBootstrap()
@@ -126,7 +126,7 @@ public final class RobinServer {
                 .bind().addListener(PipelineUtils.BE_BIND_LISTENER);
 
         //executorGroup.scheduleAtFixedRate(this::sendSpam, 10L, 10L , TimeUnit.SECONDS);
-        executorGroup.scheduleAtFixedRate(this::reportStatus, 10L, 10L , TimeUnit.SECONDS);
+        executorGroup.scheduleAtFixedRate(this::reportStatus, 30L, 30L , TimeUnit.SECONDS);
     }
 
     private void reportStatus() {
